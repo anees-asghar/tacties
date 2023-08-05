@@ -34,13 +34,13 @@ function App() {
   })();
 
   return (
-    <div className='bg-blue h-screen text-white font-roboto'>
+    <div className='xl:h-screen bg-blue text-white font-roboto overflow-hidden'>
       <Navbar />
       <DndContext onDragEnd={handleDragEnd} autoScroll={false}>
-        <div className='flex h-5/6'>
+        <div className='xl:flex xl:h-5/6'>
 
           {/* Player One Area */}
-          <div className='w-3/12 h-full flex flex-col items-end pt-20'>
+          <div className='xl:w-3/12 xl:h-full flex flex-col items-center xl:items-end pt-10 xl:pt-20'>
             <div>
               <div className='w-80 h-64 flex flex-wrap'>
                 {playerOnePieceIds.map((id, _) => 
@@ -54,7 +54,7 @@ function App() {
           </div>
 
           {/* Game Grid Area */}
-          <div className='w-1/2 h-full flex flex-col items-center pt-10'>
+          <div className='xl:w-1/2 xl:h-full flex flex-col items-center pt-10'>
             <div className='h-96 w-96 flex flex-wrap'>
                 {gameGridCellIds.map((id, _) => 
                   <GameGridCell id={id} key={id}>
@@ -69,10 +69,9 @@ function App() {
               </div>
             : null}
           </div>
-          
 
           {/* Player Two Area */}
-          <div className='w-3/12 h-full flex flex-col items-start pt-20'>
+          <div className='xl:w-3/12 xl:h-full flex flex-col items-center xl:items-start py-10 xl:pt-20 xl:pb-0'>
             <div>
               <div className='w-80 h-64 flex flex-wrap'>
                 {playerTwoPieceIds.map((id, _) => 
