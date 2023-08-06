@@ -95,11 +95,11 @@ function App() {
       nextState.message = "";
       nextState.gameOver = false;
 
-      for (const key in myState.cellValues) {
+      for (let key in myState.cellValues) {
         nextState.cellValues[key] = null;
       }
 
-      for (const key in myState.pieceAvailability) {
+      for (let key in myState.pieceAvailability) {
         nextState.pieceAvailability[key] = true;
       }
 
@@ -113,7 +113,7 @@ function App() {
     const pieceId = event.active.id;
     const cellId = event.over.id;
 
-    if (!isValidMove(pieceId, cellId)) return;
+    if (!isValidMove(pieceId, cellId, myState.playerToMove)) return;
 
     setMyState(() => {
       let nextState = {...myState};
@@ -123,23 +123,26 @@ function App() {
       if (checkPlayerWon()) {
         nextState.message = `Player ${myState.playerToMove === "1" ? "One" : "Two"} Won!`;
         nextState.gameOver = true;
-      } else if (checkNoPossibleMoves()) {
-        nextState.message = "Game Tied!";
-        nextState.gameOver = true;
       } else {
         nextState.playerToMove = myState.playerToMove === "1" ? "2" : "1";
+
+        if (checkNoPossibleMoves(nextState.playerToMove)) {
+          nextState.message = "Game Tied!";
+          nextState.gameOver = true;
+        }
       }
+
       return nextState;
     })
   }
 
-  function isValidMove(pieceId, cellId) {
-    if (pieceId[1] !== myState.playerToMove) return false;
+  function isValidMove(pieceId, cellId, playerToMove) {
+    if (pieceId[1] !== playerToMove) return false;
 
     const currPieceId = myState.cellValues[cellId];
     if (!currPieceId) return true;
 
-    if (currPieceId[1] !== myState.playerToMove && 
+    if (currPieceId[1] !== playerToMove && 
       getPiecePriority(pieceId) > getPiecePriority(currPieceId)) {
       return true;
     }
@@ -192,8 +195,19 @@ function App() {
     return false;
   }
 
-  function checkNoPossibleMoves() {
-    return false;
+  function checkNoPossibleMoves(playerToMove) {
+    for (let i = 1; i <= 9; i++){
+      const pieceId = i + playerToMove + "2";
+
+      if (myState.pieceAvailability[pieceId]) {
+        // if there is a cell that can accept this piece then return false
+        for (let j = 0; j < gameGridCellIds.length; j++) {
+          const cellId = gameGridCellIds[j];
+          if (isValidMove(pieceId, cellId, playerToMove)) return false;
+        }
+      }
+    }
+    return true;
   }
 }
 
