@@ -11,7 +11,7 @@ function Piece({id, piecePriority, disabled}) {
         <Draggable id={id} disabled={disabled} moreStyle={{
             width: diameter,
             height: diameter,
-            background: id[1] === "1" ? "#39AC80" : "#D68877",
+            background: id[1] === "1" ? "#66ccbe" : "#c086ea",
             borderRadius: "100%"
         }} />
     );

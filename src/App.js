@@ -34,7 +34,7 @@ function App() {
   })();
 
   return (
-    <div className='xl:h-screen bg-blue text-white font-roboto overflow-hidden'>
+    <div className='xl:h-screen bg-black text-white font-roboto overflow-hidden'>
       <Navbar />
       <DndContext onDragEnd={handleDragEnd} autoScroll={false}>
         <div className='xl:flex xl:h-5/6'>
@@ -42,20 +42,20 @@ function App() {
           {/* Player One Area */}
           <div className='xl:w-3/12 xl:h-full flex flex-col items-center xl:items-end pt-10 xl:pt-20'>
             <div>
-              <div className='w-80 h-64 flex flex-wrap'>
+              <div className='w-80 h-64 xl:w-64 xl:h-80 flex flex-wrap flex-col xl:flex-row'>
                 {playerOnePieceIds.map((id, _) => 
                   <div key={"pieceCell" + id} className="w-1/3 h-1/3 flex items-center justify-center">
                     {myState.pieceAvailability[id] ? pieceMarkups[id] : null}
                   </div>
                 )}
               </div>
-              <p className='text-center mt-8'>Player One</p>
+              <p className='text-center mt-5 text-gray'>Player One</p>
             </div>
           </div>
 
           {/* Game Grid Area */}
           <div className='xl:w-1/2 xl:h-full flex flex-col items-center pt-10'>
-            <div className='h-96 w-96 flex flex-wrap'>
+            <div className='h-96 w-96 grid grid-rows-3 grid-cols-3 gap-1 bg-white'>
                 {gameGridCellIds.map((id, _) => 
                   <GameGridCell id={id} key={id}>
                     {myState.cellValues[id] ? pieceMarkups[myState.cellValues[id]] : null}
@@ -64,8 +64,8 @@ function App() {
             </div>
             {myState.gameOver ? 
               <div className='pt-8 w-full flex flex-col'>
-                <p className='text-center text-lg'>{myState.message}</p>
-                <button className='mt-4 mx-auto w-16 h-12 rounded-lg text-3xl hover:bg-white hover:text-blue transition-colors ease-in-out delay-50' onClick={restartGame}>⟳</button>
+                <p className='text-center'>{myState.message}</p>
+                <button className='mt-4 mx-auto w-16 h-12 rounded-lg text-3xl hover:bg-white hover:text-black transition-colors ease-in-out delay-50' onClick={restartGame}>⟳</button>
               </div>
             : null}
           </div>
@@ -73,14 +73,14 @@ function App() {
           {/* Player Two Area */}
           <div className='xl:w-3/12 xl:h-full flex flex-col items-center xl:items-start py-10 xl:pt-20 xl:pb-0'>
             <div>
-              <div className='w-80 h-64 flex flex-wrap'>
+              <div className='w-80 h-64 xl:w-64 xl:h-80 flex flex-wrap flex-col-reverse xl:flex-row-reverse'>
                 {playerTwoPieceIds.map((id, _) => 
                   <div key={"pieceCell" + id} className="w-1/3 h-1/3 flex items-center justify-center">
                     {myState.pieceAvailability[id] ? pieceMarkups[id] : null}
                   </div>
                 )}
               </div>
-              <p className='text-center mt-8'>Player Two</p>
+              <p className='text-center mt-8 text-gray'>Player Two</p>
             </div>
           </div>
         </div>
@@ -148,7 +148,11 @@ function App() {
   }
 
   function getPiecePriority(pieceId) {
-    return ~~((parseInt(pieceId[0])-1) / 3);
+    const tmp = pieceId[0];
+    if (tmp === '1' || tmp === '4' || tmp === '7') return 2;
+    else if (tmp === '2' || tmp === '5' || tmp === '8') return 1;
+    else return 0;
+    // return ~~((parseInt(pieceId[0])-1) / 3);
   }
 
   function checkPlayerWon() {

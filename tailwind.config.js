@@ -5,11 +5,9 @@ module.exports = {
   ],
   theme: {
     colors: {
-      "blue": "#102937",
-      "green": "#39AC80",
-      "red": "#D68877",
       "white": "#FFFFFF",
-      "black": "#000000"
+      "black": "#000000",
+      "gray": "#7f7f7f"
     },
     fontFamily: {
       "roboto": ["Roboto", "sans-serif"],

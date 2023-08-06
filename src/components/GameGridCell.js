@@ -5,11 +5,11 @@ function GameGridCell(props) {
         id: props.id
     });
     const style = {
-        backgroundColor: isOver ? 'rgba(255, 255, 255, 0.1)' : undefined,
+        backgroundColor: isOver ? 'rgba(0, 0, 0, 0.8)' : undefined,
     };
 
     return (
-        <div className="h-1/3 w-1/3 border-2 flex items-center justify-center" ref={setNodeRef} style={style}>
+        <div className="flex items-center justify-center bg-black transition-colors ease-in-out delay-50" ref={setNodeRef} style={style}>
             {props.children}
         </div>
     );
