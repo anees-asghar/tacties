@@ -1,4 +1,3 @@
-import './App.css';
 import { DndContext } from '@dnd-kit/core';
 import { useState } from 'react';
 import { Navbar, GameGridCell, Piece } from './components';
